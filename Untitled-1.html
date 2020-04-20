@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>touristee</title>
+    <div class="testDiv"></div>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src ="https://momentjs.com/downloads/moment.js"></script>
+    <script>
+
+//function to convert meters into miles
+
+function convertir(y){
+
+var x = y/1609;
+   x= x.toFixed(2)
+}
+
+function convert(x){
+        if (x<161){
+           var y= x*3.28;
+           y=y.toFixed(2);
+           return `${y}ft.`;
+
+        }
+        else {
+            var y= x/1609;
+           y= y.toFixed(2);
+            return `${y}mi.`;
+        }
+}
+
+//This is for activites and it works!
+var lat4;
+var lon4;
+// var urlq4=`https://api.opentripmap.com/0.1/en/places/radius?radius=${radius4}&lon=${lon4}&lat=${lat4}&apikey=${APIkey4}`
+var urlqtest=`https://api.opentripmap.com/0.1/en/places/radius?radius=7000&lon=-74.0014&lat=40.7465&apikey=5ae2e3f221c38a28845f05b676004cdfcca89f531e9d32ef7284a68b`
+var distance4 =1;
+
+    $.ajax({
+      url: urlqtest,
+      method: "GET"
+    }).then(function(response) {
+        for (var i=0; i<5; i++){
+        console.log("This is the data",response);
+        console.log(response.features[i]);
+        console.log("This is the lat",response.features[i].geometry.coordinates[0]);
+        console.log("name",response.features[i].properties.name);
+        console.log("description", response.features[i].properties.kinds); 
+        console.log("Distance in meters",response.features[i].properties.dist);
+        console.log("Distance in feet",convert(response.features[i].properties.dist));
+        var lat5= response.features[i].geometry.coordinates[1]
+        var lon5= response.features[i].geometry.coordinates[0]
+        var description = response.features[i].properties.kinds;
+        var name = response.features[i].properties.name;
+        var distancem = convert(response.features[i].properties.dist);
+        }
+    });
+
+
+//     var settings = {
+// 	"async": true,
+// 	"crossDomain": true,
+// 	// "url": `https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=${userLongitude}&lat=${userLatitude}&distance=${distance1}`,
+//     "url": "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=-73.992378&lat=40.68919&distance=1",
+//     "method": "GET",
+// 	"headers": {
+// 		"x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
+// 		"x-rapidapi-key": "71b129468dmshc94f372540c81d1p1267d0jsnb5997d7a1653"
+// 	}
+// }
+
+// $.ajax(settings).done(function (response) {
+//     console.log(response);
+//     console.log(response.result.data);
+//     for (var m = 0; m<5; m++){
+//         var name= response.result.data[m].restaurant_name;
+//         var address = response.result.data[m].address.formatted;
+//         var cuisine =response.result.data[m].cuisines[0];
+//         var lat2 = response.result.data[m].geo.lat;
+//         var lon2 = response.result.data[m].geo.lon;
+//         console.log(name);
+//         console.log(address);
+//         console.log(cuisine);
+//         console.log(lon2);
+//         var div=$("<div>");
+//         // div.id ='r'+m;
+//         var p=$("<p>");
+//         var p2=$("<p>");
+//         var distance;
+//         p.html(`Name:${name}   Distance:${distance}`);
+//         p2.html(`Address:${address}   Cuissine:${cuisine}`);
+//         $(".testDiv").append(div);
+//         div.append(p);
+//         div.append(p2);
+//     }
+// });
+    
+// var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "https://us-restaurant-menus.p.rapidapi.com/restaurants/zip_code/11211",
+//   "method": "GET",
+//   "headers": {
+//     "X-RapidAPI-Host": "us-restaurant-menus.p.rapidapi.com",
+//     "X-RapidAPI-Key": "71b129468dmshc94f372540c81d1p1267d0jsnb5997d7a1653"
+//   }
+// }
+
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+// });
+
+// var unirest = require("unirest");
+
+// var req = unirest("GET", "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo");
+
+// req.query({
+// 	"page": "1",
+// 	"lon": "-73.992378",
+// 	"lat": "40.68919",
+// 	"distance": "1"
+// });
+
+// req.headers({
+// 	"x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
+// 	"x-rapidapi-key": "71b129468dmshc94f372540c81d1p1267d0jsnb5997d7a1653"
+// });
+
+
+// req.end(function (res) {
+// 	if (res.error) throw new Error(res.error);
+
+// 	console.log(res.body);
+// });
+
+    </script>
+    
+</body>
+</html>
